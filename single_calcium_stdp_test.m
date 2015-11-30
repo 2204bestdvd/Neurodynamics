@@ -3,14 +3,14 @@ clear; clc;
 C_m  = 1.0; % membrane capacitance, in uF/cm^2
 
 % System definition
-N = 3;
-sim_time = 1000;
+N = 2;
+sim_time = 600;
 step = 0.05;
 time = 0:step:sim_time;
 topo = eye(N);  % N x N matrix indicating network topology, ex. topo(i,j)=1 for i -> j
 topo = topo(circshift((1:N)', -1), :);  % test: circular 1 -> 2-> ... -> N -> 1
 % topo = zeros(N);
-% topo = [0, 1; 0, 0];
+topo = [0, 1; 0, 0];
 
 V = zeros(N, length(time));
 V(:, 1) = -70;
@@ -28,10 +28,9 @@ n(:, 1) = 0.317;
 I_ext = zeros(N, length(time));
 %I_ext = (10+10*rand(N,1))*ones(1, length(time));
 %I_ext = [20; 0; 0; 0; 0] * ones(1, length(time));
-I_ext(1, 4000:5800) = 20;
-I_ext(1, 8000:9000) = 20;
-I_ext(2, 4400:5000) = 20;
-I_ext(3, 4600:5000) = 20;
+I_ext(1, 4000:4200) = 20;
+% I_ext(1, 8000:9000) = 20;
+I_ext(2, 8000:8200) = 20;
 
 % Parameters
 % Assume peak synaptic conductance, g, fixed (over time and across synapses) at this point
@@ -78,8 +77,8 @@ end
 
 figure; plot(time, V);
 figure;
-subplot(4,1,1);  plot(time, squeeze(Ca(1,2,:)));
-subplot(4,1,2);  plot(time, squeeze(g_ampa(1,2,:)));
+subplot(4,1,1);  plot(time, squeeze(sum(sum(Ca))));
+subplot(4,1,2);  plot(time, squeeze(sum(sum(g_ampa))));
 subplot(4,1,3);  plot(time, debug);
 subplot(4,1,4);  plot(time, debug2);
 
