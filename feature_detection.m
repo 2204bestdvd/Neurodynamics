@@ -1,4 +1,4 @@
-function test()
+function feature_detection()
 
 % Constants
 C_m  = 1.0; % membrane capacitance, in uF/cm^2
@@ -32,7 +32,7 @@ I_syn = zeros(N, 1);
 %I_ext = [20; 0] * ones(1, length(time));
 %I_ext(1, 1:1000) = 0;
 I_ext = zeros(N, length(time));
-I_ext(1, 1001:2000) = 20;
+I_ext(1, 1001:1200) = 50;
 
 % Parameters
 g_gaba = 3;  % mS/cm^2
@@ -40,13 +40,13 @@ g_glu = 1;
 
 for t = 1:length(time)-1
 %    system('pause');
-	[I_self, dmdt, dhdt, dndt] = HH(V(:,t), m(:,t), h(:,t), n(:,t));
+	[I_self, dmdt, dhdt, dndt] = HH_burst(V(:,t), m(:,t), h(:,t), n(:,t));
 	%[I_syn(1), drdt(2)] = inhibitory(V(2,t), V(1,t), g_gaba, r(2));
-	%[I_syn(2), drdt(1)] = inhibitory(V(1,t), V(2,t), g_gaba, r(1));
-	[I_syn(2), drdt(1)] = excitatory(V(1,t), V(2,t), g_glu, r(1));
+	[I_syn(2), drdt(1)] = inhibitory(V(1,t), V(2,t), g_gaba, r(1));
+	%[I_syn(2), drdt(1)] = excitatory(V(1,t), V(2,t), g_glu, r(1));
 	%[I_syn(3), drdt(2)] = excitatory(V(1,t), V(3,t), g_glu, r(2));
-	%I_total = I_ext(:,t) + I_self; 
-	I_total = I_ext(:,t) + I_self + I_syn; 
+	I_total = I_ext(:,t) + I_self; 
+	%I_total = I_ext(:,t) + I_self + I_syn; 
 	dVdt = I_total / C_m;
 	V(:,t+1) = V(:,t) + step*dVdt;
 	m(:,t+1) = m(:,t) + step*dmdt;
