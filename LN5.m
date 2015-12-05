@@ -29,9 +29,11 @@ I_K = g_K  * (n.^4) .* (E_K - V);
 I_L = g_L * (E_L - V);
 I_slow = g_slow  * (slow.^1) .* (E_slow - V);
 I = I_Na + I_K + I_slow + I_L;
+%I = I_Na + I_K + I_L;
 
 % Diffeq's for gating variables
 dmdt = alpha_m.*(1-m) - beta_m.*m;
 dhdt= alpha_h.*(1-h) - beta_h.*h;
 dndt = alpha_n.*(1-n) - beta_n.*n;
 dslowdt = (slow_inf - slow) ./ tau_slow;
+%dslowdt = 0;

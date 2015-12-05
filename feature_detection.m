@@ -40,7 +40,7 @@ I_ext = zeros(N, length(time));
 I_ext(1, 1001:1200) = 40;
 % I_ext(3, 1001:1300) = [linspace(1, 10, 150), linspace(10, 1, 150)];
 % I_ext(1, 1501:1700) = 40;
-% I_ext(5, 1001:1200) = -10;
+% I_ext(5, 1001:1200) = -7;
 
 % Parameters
 %g_gaba = 20;  % mS/cm^2
@@ -89,7 +89,7 @@ for t = 1:length(time)-1
 end
 
 figure; plot(time, V);
-%figure; plot(time, m(5,:))
+figure; plot(time, m(5,:), time, n(5,:), time, h(5,:))
 %figure; plot(time, slow);
 
 
